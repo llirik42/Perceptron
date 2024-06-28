@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
+from ucimlrepo import fetch_ucirepo
 
 from common import Sigmoid, Layer, get_train_validation_test, get_delta_of_tp_tn_fp_fn
 from model import TemperatureModel
 from preprocessing import preprocess
-from ucimlrepo import fetch_ucirepo
 
 FEATURES_COUNT: int = 10
 TRAIN: float = 0.7
@@ -14,7 +14,7 @@ VALIDATION: float = 0.0
 EPOCHS: int = 10
 LEARNING_RATE: float = 0.01
 THRESHOLD: float = 0.5
-TARGET: str = 'poisonous'
+TARGET: str = "poisonous"
 
 
 def main() -> None:
@@ -30,10 +30,7 @@ def main() -> None:
 
     print("Starting preprocessing ...")
     preprocessed_df: pd.DataFrame = preprocess(
-        df=df,
-        original_target=original_target,
-        destination_target=TARGET,
-        features_count=FEATURES_COUNT
+        df=df, original_target=original_target, destination_target=TARGET, features_count=FEATURES_COUNT
     )
     print("Dataset preprocessed!\n")
 
@@ -43,14 +40,14 @@ def main() -> None:
         validation=VALIDATION,
     )
 
-    model: TemperatureModel = TemperatureModel([
-        Layer(input_size=preprocessed_df.columns.size - 1, output_size=1, activation=Sigmoid())
-    ])
+    model: TemperatureModel = TemperatureModel(
+        [Layer(input_size=preprocessed_df.columns.size - 1, output_size=1, activation=Sigmoid())]
+    )
 
     print("Starting training ...")
     train_errors: list[float] = []
     for j in range(EPOCHS):
-        print(f'Epoch {j + 1}')
+        print(f"Epoch {j + 1}")
         for i in tqdm(range(len(train))):
             current_row: pd.Series = train.iloc[i]
             real_target_value: float = current_row[original_target]
@@ -60,10 +57,7 @@ def main() -> None:
             error: float = predicted_target_value - real_target_value
             train_errors.append(error)
 
-            model.backward(
-                error=error,
-                learning_rate=LEARNING_RATE
-            )
+            model.backward(error=error, learning_rate=LEARNING_RATE)
     print("Training finished!\n")
 
     print("Starting test ...\n")
@@ -102,10 +96,10 @@ def main() -> None:
     # Среднее гармоническое между прецизионностью и полнотой. Умножение на 2 чтобы число было в [0; 1]
     f_score = 2 * (precision * recall) / (precision + recall)
 
-    print(f'Accuracy: {accuracy}')
-    print(f'Precision: {precision}')
-    print(f'Recall: {recall}')
-    print(f'F-SCORE: {f_score}')
+    print(f"Accuracy: {accuracy}")
+    print(f"Precision: {precision}")
+    print(f"Recall: {recall}")
+    print(f"F-SCORE: {f_score}")
 
     x = []
     y = []
@@ -140,10 +134,10 @@ def main() -> None:
 
     plt.xlim([-0.05, 1.05])
     plt.ylim([-0.05, 1.05])
-    plt.plot(x, y, 'r-')
+    plt.plot(x, y, "r-")
     plt.plot(np.linspace(0, 1, 2), np.linspace(0, 1, 2))
     plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

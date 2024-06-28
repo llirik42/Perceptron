@@ -3,14 +3,12 @@ from sklearn.preprocessing import LabelEncoder
 
 from common import calculate_gain_ratio
 
+__all__ = ["preprocess"]
 
-__all__ = ['preprocess']
 
-
-def preprocess(df: pd.DataFrame,
-               original_target: str,
-               destination_target: str,
-               features_count: int = 10) -> pd.DataFrame:
+def preprocess(
+        df: pd.DataFrame, original_target: str, destination_target: str, features_count: int = 10
+) -> pd.DataFrame:
     features: list[str] = []
     features_to_drop: list[str] = []
     for c in df.columns:
@@ -31,7 +29,7 @@ def preprocess(df: pd.DataFrame,
 
     final_features: list[str] = []
     # +1 -- because we want "FEATURES_COUNT" features + target column
-    for column, gain_ratio in calculate_gain_ratio(df=result, target=destination_target)[:features_count + 1]:
+    for column, gain_ratio in calculate_gain_ratio(df=result, target=destination_target)[: features_count + 1]:
         final_features.append(column)
 
     for f in result.columns:

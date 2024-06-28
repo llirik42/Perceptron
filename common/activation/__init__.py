@@ -1,7 +1,7 @@
 __all__ = [
-    'Activation',
-    'Sigmoid',
-    'LeakyReLu',
+    "Activation",
+    "Sigmoid",
+    "LeakyReLu",
 ]
 
 from .activation import Activation

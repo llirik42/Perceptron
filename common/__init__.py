@@ -1,12 +1,12 @@
 __all__ = [
-    'calculate_gain_ratio',
-    'Layer',
-    'get_train_validation_test',
-    'Activation',
-    'Sigmoid',
-    'LeakyReLu',
-    'get_delta_of_tp_tn_fp_fn',
-    'Normalizer',
+    "calculate_gain_ratio",
+    "Layer",
+    "get_train_validation_test",
+    "Activation",
+    "Sigmoid",
+    "LeakyReLu",
+    "get_delta_of_tp_tn_fp_fn",
+    "Normalizer",
 ]
 
 from .activation import Activation, Sigmoid, LeakyReLu

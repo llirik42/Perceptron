@@ -2,7 +2,7 @@ import numpy as np
 
 from .activation import Activation
 
-__all__ = ['Layer']
+__all__ = ["Layer"]
 
 
 class Layer:
@@ -46,4 +46,4 @@ class Layer:
         return de_dx
 
     def __str__(self) -> str:
-        return f'w\n{self.__weights}\n\nb\n{self.__bias}'
+        return f"w\n{self.__weights}\n\nb\n{self.__bias}"
